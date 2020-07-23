@@ -23,7 +23,7 @@ struct od_node_iter_vtable {
 
 struct od_node_iter {
     od_node_iter_vtable *vtable;
-    // Extensible struct
+    void *data;
 };
 
 struct od_node_vtable {
@@ -39,7 +39,7 @@ struct od_node_vtable {
 
 struct od_node {
     od_node_vtable *vtable;
-    // Extensible struct
+    void *data;
 };
 
 #ifdef __cplusplus
