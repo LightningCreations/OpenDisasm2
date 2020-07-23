@@ -10,6 +10,8 @@ typedef struct od_node_vtable od_node_vtable;
 typedef struct od_node_iter od_node_iter;
 typedef struct od_node_iter_vtable od_node_iter_vtable;
 
+#include <stdint.h>
+
 struct od_node_iter_vtable {
     uintptr_t size;
     uintptr_t align;
