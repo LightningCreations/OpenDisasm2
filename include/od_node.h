@@ -11,8 +11,8 @@ typedef struct od_node_iter od_node_iter;
 typedef struct od_node_iter_vtable od_node_iter_vtable;
 
 struct od_node_iter_vtable {
-    void (*dealloc_data)(od_node);
-    void (*destruct_data)(od_node);
+    void (*dealloc)(void *data);
+    void (*destruct)(void *data);
     od_node* (*next)(od_node_iter *iter);
     void *reserved3;
     void *reserved4;
@@ -27,8 +27,8 @@ struct od_node_iter {
 };
 
 struct od_node_vtable {
-    void (*dealloc)(od_node);
-    void (*destruct)(od_node);
+    void (*dealloc)(void *data);
+    void (*destruct)(void *data);
     od_node_iter* (*get_child_iterator)(od_node *parent);
     const char* (*get_uuid)(od_node*);
     void *reserved4;
