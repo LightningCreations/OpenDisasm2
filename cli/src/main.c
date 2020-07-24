@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <od_module.h>
 
-const int NUM_MODULES = 1;
+#define NUM_MODULES 1
 
-const char *modules[NUM_MODULES] = {
+static const char *modules[NUM_MODULES] = {
     "disasm_elf"
 };
 
