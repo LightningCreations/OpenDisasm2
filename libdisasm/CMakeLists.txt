@@ -17,30 +17,33 @@ if(NOT OD_BUILD_SHARED AND NOT OD_BUILD_STATIC)
 endif()
 
 add_library(disasm_obj OBJECT src/od_node.c)
-target_include_directories(disasm_obj PUBLIC include)
+target_include_directories(disasm_obj PRIVATE include)
+
+add_library(disasm_interface INTERFACE)
+target_include_directories(disasm_interface INTERFACE include)
+install(TARGETS disasm_interface EXPORT disasm)
+install(DIRECTORY include/ TYPE INCLUDE)
 
 if(OD_BUILD_SHARED)
     add_library(disasm_shared SHARED $<TARGET_OBJECTS:disasm_obj>)
+    target_link_libraries(disasm_shared INTERFACE disasm_interface)
     set_target_properties(disasm_shared PROPERTIES VERSION 0.1.0)
     set_target_properties(disasm_shared PROPERTIES SOVERSION 0.1)
     set_target_properties(disasm_shared PROPERTIES OUTPUT_NAME "disasm")
     install(TARGETS disasm_shared
             EXPORT disasm
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib)
+           )
     add_library(disasm ALIAS disasm_shared)
 endif()
 if(OD_BUILD_STATIC)
     add_library(disasm_static STATIC $<TARGET_OBJECTS:disasm_obj>)
+    target_link_libraries(disasm_static INTERFACE disasm_interface)
     set_target_properties(disasm_static PROPERTIES VERSION 0.1.0)
     set_target_properties(disasm_static PROPERTIES SOVERSION 0)
     set_target_properties(disasm_static PROPERTIES OUTPUT_NAME "disasm")
     install(TARGETS disasm_static
             EXPORT disasm
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib)
+           )        
     if(NOT OD_BUILD_SHARED)
         add_library(disasm ALIAS disasm_static)
     endif()
