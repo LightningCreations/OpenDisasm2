@@ -12,8 +12,18 @@ static void od_module_register_fn_def(char *uuid, void *base, od_detect_fn *dete
 // Extra includes
 #include <windows.h>
 
+// Code adapted from https://docs.microsoft.com/en-us/windows/win32/dlls/using-run-time-dynamic-linking
 void od_load_module(char* name) {
-    // WIP
+    char *libname = malloc(
+            strlen(name) +
+            5); // ".dll\0"
+    libname[0] = 0;
+    strcat(libname, name);
+    strcat(libname, ".dll");
+    HINSTANCE module = LoadLibrary(TEXT(libname));
+    free(libname);
+    od_bool (*od_module_register)(od_module_register_fn*, void*) = GetProcAddress(module, "od_module_register");
+    od_module_register(od_module_register_fn_def, NULL); // base will be replaced later with something useful
 }
 
 #else // Mac and Linux
@@ -40,6 +50,7 @@ void od_load_module(char* name) {
     strcat(libname, ".so");
 #endif
     void *module = dlopen(libname, RTLD_LAZY | RTLD_LOCAL);
+    free(libname);
     od_bool (*od_module_register)(od_module_register_fn*, void*) = dlsym(module, "od_module_register");
     od_module_register(od_module_register_fn_def, NULL); // base will be replaced later with something useful
 }
