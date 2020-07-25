@@ -3,8 +3,13 @@
 #include <string.h>
 
 #include <od_module.h>
+#include "od_data.h"
 
 static void od_module_register_fn_def(od_data *data, const char *uuid, od_detect_fn *detect_fn) {
+    disasm *disasm = malloc(sizeof(disasm));
+    disasm->uuid = uuid;
+    disasm->detect = detect_fn;
+    ll_push(data->disasms, disasm);
 }
 
 #ifdef _WIN32 // Windows

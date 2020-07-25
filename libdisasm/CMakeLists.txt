@@ -18,7 +18,7 @@ endif()
 
 include(GNUInstallDirs)
 
-add_library(disasm_obj OBJECT src/od_core.c src/od_module.c src/od_node.c)
+add_library(disasm_obj OBJECT src/ll.c src/od_core.c src/od_module.c src/od_node.c)
 target_include_directories(disasm_obj PRIVATE include)
 set_target_properties(disasm_obj PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
