@@ -4,7 +4,7 @@
 
 #include <od_module.h>
 
-static void od_module_register_fn_def(char *uuid, void *base, od_detect_fn *detect_fn) {
+static void od_module_register_fn_def(od_data *data, char *uuid, od_detect_fn *detect_fn) {
 }
 
 #ifdef _WIN32 // Windows
@@ -13,7 +13,7 @@ static void od_module_register_fn_def(char *uuid, void *base, od_detect_fn *dete
 #include <windows.h>
 
 // Code adapted from https://docs.microsoft.com/en-us/windows/win32/dlls/using-run-time-dynamic-linking
-void od_load_module(char* name) {
+void od_load_module(od_data *data, char *name) {
     char *libname = malloc(
             strlen(name) +
             5); // ".dll\0"
@@ -22,8 +22,8 @@ void od_load_module(char* name) {
     strcat(libname, ".dll");
     HINSTANCE module = LoadLibrary(TEXT(libname));
     free(libname);
-    od_bool (*od_module_register)(od_module_register_fn*, void*) = GetProcAddress(module, "od_module_register");
-    od_module_register(od_module_register_fn_def, NULL); // base will be replaced later with something useful
+    od_bool (*od_module_register)(od_data*, od_module_register_fn*) = GetProcAddress(module, "od_module_register");
+    od_module_register(data, od_module_register_fn_def);
 }
 
 #else // Mac and Linux
@@ -31,7 +31,7 @@ void od_load_module(char* name) {
 // Extra includes
 #include <dlfcn.h>
 
-void od_load_module(char* name) {
+void od_load_module(od_data *data, char *name) {
     char *libname = malloc(
             3 + // "lib"
             strlen(name) +
@@ -51,13 +51,13 @@ void od_load_module(char* name) {
 #endif
     void *module = dlopen(libname, RTLD_LAZY | RTLD_LOCAL);
     free(libname);
-    od_bool (*od_module_register)(od_module_register_fn*, void*) = dlsym(module, "od_module_register");
-    od_module_register(od_module_register_fn_def, NULL); // base will be replaced later with something useful
+    od_bool (*od_module_register)(od_data*, od_module_register_fn*) = dlsym(module, "od_module_register");
+    od_module_register(data, od_module_register_fn_def);
 }
 
 #endif
 
-od_bool od_module_register(od_module_register_fn *register_fn, void *base) {
+od_bool od_module_register(od_data *data, od_module_register_fn *register_fn) {
     printf("I'm being loaded as a module... :thonk:\n");
     return 1;
 }
