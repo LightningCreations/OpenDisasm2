@@ -4,7 +4,7 @@
 
 #include <od_module.h>
 
-static void od_module_register_fn_def(od_data *data, char *uuid, od_detect_fn *detect_fn) {
+static void od_module_register_fn_def(od_data *data, const char *uuid, od_detect_fn *detect_fn) {
 }
 
 #ifdef _WIN32 // Windows
@@ -13,7 +13,7 @@ static void od_module_register_fn_def(od_data *data, char *uuid, od_detect_fn *d
 #include <windows.h>
 
 // Code adapted from https://docs.microsoft.com/en-us/windows/win32/dlls/using-run-time-dynamic-linking
-void od_load_module(od_data *data, char *name) {
+void od_load_module(od_data *data, const char *name) {
     char *libname = malloc(
             strlen(name) +
             5); // ".dll\0"
@@ -31,7 +31,7 @@ void od_load_module(od_data *data, char *name) {
 // Extra includes
 #include <dlfcn.h>
 
-void od_load_module(od_data *data, char *name) {
+void od_load_module(od_data *data, const char *name) {
     char *libname = malloc(
             3 + // "lib"
             strlen(name) +
