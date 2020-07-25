@@ -69,11 +69,11 @@ struct od_node_raw_data {
     void *data;
 };
 
-void destroy_node_iter_data(od_node_iter*);
-void free_node_iter_data(od_node_iter*);
+void od_destroy_node_iter_data(od_node_iter*);
+void od_free_node_iter_data(od_node_iter*);
 
-void destroy_node_data(od_node*);
-void free_node_data(od_node*);
+void od_destroy_node_data(od_node*);
+void od_free_node_data(od_node*);
 
 #ifdef __cplusplus
 }
