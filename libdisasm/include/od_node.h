@@ -44,7 +44,7 @@ struct od_node_vtable {
     void (*destruct)(void *data);
     od_node_iter* (*get_child_iterator)(void *data);
     const char* (*get_uuid)(void *data);
-    void *reserved4;
+    const char* (*get_name)(void *data); // Nullable
     void *reserved5;
 };
 
