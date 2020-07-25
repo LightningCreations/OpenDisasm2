@@ -19,6 +19,16 @@ typedef struct od_node_raw_data_vtable od_node_raw_data_vtable;
 
 #include <stdint.h>
 
+#if defined(_MSC_VER) && !defined(__cplusplus)
+#define alignof(T) __alignof(T)
+#elif defined(__cplusplus)&&__cplusplus>=201103L
+// Nothing
+#elif __STDC_VERSION__>201112L
+#include <stdalign.h>
+#else
+#define alignof(T) 1 // Last restort
+#endif
+
 #include "od_types.h"
 
 struct od_node_iter_vtable {
