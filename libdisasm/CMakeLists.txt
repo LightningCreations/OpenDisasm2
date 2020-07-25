@@ -20,7 +20,7 @@ include(GNUInstallDirs)
 
 add_library(disasm_obj OBJECT src/od_module.c src/od_node.c)
 target_include_directories(disasm_obj PRIVATE include)
-set_target_properies(disasm_obj PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(disasm_obj PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 install(DIRECTORY include/ TYPE INCLUDE)
 
