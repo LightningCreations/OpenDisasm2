@@ -41,7 +41,7 @@ void od_destroy_node_iter_data(od_node_iter *iter) {
 }
 
 void od_free_node_iter_data(od_node_iter *iter) {
-    if(!iter->data) return;
+    if(!iter->data || !iter->vtable->dealloc) return;
     iter->vtable->dealloc(iter->data);
     iter->data = NULL;
 }
