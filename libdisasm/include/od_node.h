@@ -54,13 +54,14 @@ struct od_node_vtable {
     void (*destruct)(void *data);
     od_node_iter* (*get_child_iterator)(void *data);
     const char* (*get_uuid)(void *data);
-    const char* (*get_name)(void *data); // Nullable
+    void *reserved4;
     void *reserved5;
 };
 
 struct od_node {
     od_node_vtable *vtable;
     void *data;
+    char *name; // Nullable
 };
 
 struct od_node_raw_data_vtable {

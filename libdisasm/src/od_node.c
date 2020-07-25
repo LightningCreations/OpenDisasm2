@@ -18,7 +18,7 @@ const char* od_node_raw_get_uuid(void *data) {
     return NULL; // WIP
 }
 
-od_node_raw* od_load_file_as_node(FILE *file) {
+od_node_raw* od_load_file_as_node(char *name, FILE *file) {
     if(!file_node_vtable_set) {
         file_node_vtable.size = sizeof(file_node_data);
         file_node_vtable.align = alignof(file_node_data);
@@ -26,11 +26,14 @@ od_node_raw* od_load_file_as_node(FILE *file) {
         file_node_vtable.destruct = destruct_file_node_data;
         file_node_vtable.get_child_iterator = NULL; // WIP (should return NULL)
         file_node_vtable.get_uuid = od_node_raw_get_uuid;
-        file_node_vtable.get_name = NULL; // WIP (should return "file: <filename>")
+        file_node_vtable.reserved4 = NULL;
         file_node_vtable.reserved5 = NULL;
         file_node_vtable_set = 1;
     }
-    return NULL; // WIP
+    od_node_raw *node = malloc(sizeof(od_node_raw));
+    node->vtable = &file_node_vtable;
+    node->name = name;
+    return node;
 }
 
 void od_destroy_node_iter_data(od_node_iter *iter) {
