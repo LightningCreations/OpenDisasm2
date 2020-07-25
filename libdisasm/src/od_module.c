@@ -2,7 +2,7 @@
 
 #include <od_module.h>
 
-static void od_module_register_fn(char *uuid, void *base, od_detect_fn *detect_fn) {
+static void od_module_register_fn_def(char *uuid, void *base, od_detect_fn *detect_fn) {
 }
 
 #ifdef _WIN32 // Windows

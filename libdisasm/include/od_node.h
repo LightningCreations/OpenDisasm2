@@ -15,6 +15,7 @@ typedef od_node od_node_void; // (simple inner tree node; has no data) UUID: ???
 
 typedef od_node od_node_raw; // (simple leaf node; data is u8 iterator) UUID: ???
 typedef struct od_node_raw_data od_node_raw_data;
+typedef struct od_node_raw_data_vtable od_node_raw_data_vtable;
 
 #include <stdint.h>
 
