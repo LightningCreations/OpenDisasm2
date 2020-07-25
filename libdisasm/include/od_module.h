@@ -18,7 +18,7 @@ void od_load_module(char *name);
 typedef od_bool od_detect_fn(od_node_raw *data);
 
 // Called by modules to register critical base functions
-typedef void od_module_register_fn(char *uuid, od_detect_fn *detect_fn);
+typedef void od_module_register_fn(char *uuid, void *base, od_detect_fn *detect_fn);
 
 // Defined by modules, called by the loader.
 od_bool od_module_register(od_module_register_fn *register_fn, void *base);
