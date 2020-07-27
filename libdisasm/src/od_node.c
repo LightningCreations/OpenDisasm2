@@ -14,8 +14,8 @@ static void destruct_file_node_data(void *v_data) {
     fclose(data->file);
 }
 
-const char* od_node_raw_get_uuid(void *data) {
-    return NULL; // WIP
+od_uuid od_node_raw_get_uuid(void *data) {
+    return {0,0}; // WIP
 }
 
 od_node_raw* od_load_file_as_node(char *name, FILE *file) {
