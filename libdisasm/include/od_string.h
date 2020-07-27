@@ -1,5 +1,5 @@
-#ifndef OD_STRING_H_2020_06_27_08_16
-#define OD_STRING_H_2020_06_27_08_16
+#ifndef OD_STRING_H
+#define OD_STRING_H
 
 #ifdef __cplusplus
 extern"C"{
@@ -27,4 +27,4 @@ struct od_string_vtable{
 #endif
 
 
-#endif /* OD_STRING_H_2020_06_27_08_16
+#endif
