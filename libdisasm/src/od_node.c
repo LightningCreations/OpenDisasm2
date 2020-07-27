@@ -14,8 +14,9 @@ static void destruct_file_node_data(void *v_data) {
     fclose(data->file);
 }
 
-od_uuid od_node_raw_get_uuid(void *data) {
-    return {0,0}; // WIP
+od_uuid od_node_raw_get_uuid(const void *data) {
+    const od_uuid od_node_raw_uuid = {0, 0}; // WIP
+    return od_node_raw_uuid;
 }
 
 od_node_raw* od_load_file_as_node(char *name, FILE *file) {
@@ -26,13 +27,11 @@ od_node_raw* od_load_file_as_node(char *name, FILE *file) {
         file_node_vtable.destruct = destruct_file_node_data;
         file_node_vtable.get_child_iterator = NULL; // WIP (should return NULL)
         file_node_vtable.get_uuid = od_node_raw_get_uuid;
-        file_node_vtable.reserved4 = NULL;
-        file_node_vtable.reserved5 = NULL;
         file_node_vtable_set = 1;
     }
     od_node_raw *node = malloc(sizeof(od_node_raw));
     node->vtable = &file_node_vtable;
-    node->name = name;
+//    node->name = name; // Removed until I figure out how to make this work.
     return node;
 }
 

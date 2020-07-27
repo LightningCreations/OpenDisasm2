@@ -21,14 +21,14 @@ typedef struct od_node_raw_data_vtable od_node_raw_data_vtable;
 
 #if defined(_MSC_VER) && !defined(__cplusplus)
 #define alignof(T) __alignof(T)
-#elif defined(__cplusplus)&&__cplusplus>=201103L
+#elif defined(__cplusplus) && __cplusplus >= 201103L
 // Nothing
-#elif __STDC_VERSION__>201112L
+#elif __STDC_VERSION__ >= 201112L
 #include <stdalign.h>
 #elif defined(__GNUC__)
 #define alignof(T) __alignof__((T))
 #else
-#define alignof(T) 1 // Last restort
+#define alignof(T) 1 // Last resort
 #endif
 
 #include <od_types.h>
@@ -36,27 +36,27 @@ typedef struct od_node_raw_data_vtable od_node_raw_data_vtable;
 
 struct od_node{
     void* data;
-    od_node_vtable* vtable;
+    const od_node_vtable* vtable;
 };
 
 struct od_node_iter_vtable {
     uintptr_t size;
     uintptr_t align;
-    void (*dealloc)(void *data);
     void (*destruct)(void *data);
+    void (*dealloc)(void *data);
     od_node (*next)(void *data);
 };
 
 struct od_node_iter {
     void *data;
-    od_node_iter_vtable *vtable;
+    const od_node_iter_vtable *vtable;
 };
 
 struct od_node_vtable {
     uintptr_t size;
     uintptr_t align;
-    void (*dealloc)(void *data);
     void (*destruct)(void *data);
+    void (*dealloc)(void *data);
     od_node_iter* (*get_child_iterator)(void *data);
     od_uuid (*get_uuid)(const void *data);
     od_string (*get_name)(const void *data);
@@ -66,8 +66,8 @@ struct od_node_vtable {
 struct od_node_raw_data_vtable {
     uintptr_t size;
     uintptr_t align;
-    void (*dealloc)(void *data);
     void (*destruct)(void *data);
+    void (*dealloc)(void *data);
     uint8_t (*next)(void *data);
     od_bool (*has_next)(void *data);
     void *reserved4;
@@ -75,8 +75,8 @@ struct od_node_raw_data_vtable {
 };
 
 struct od_node_raw_data {
-    od_node_raw_data_vtable *vtable;
     void *data;
+    const od_node_raw_data_vtable *vtable;
 };
 
 void od_destroy_node_iter_data(od_node_iter*);

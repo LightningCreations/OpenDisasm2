@@ -9,12 +9,10 @@ extern "C" {
 
 typedef uint8_t od_bool;
 
-typedef struct{
+typedef struct {
    uint64_t hi;
    uint64_t lo;
 } od_uuid;
-
-
 
 #ifdef __cplusplus
 }
